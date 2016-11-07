@@ -122,6 +122,7 @@ let mapleader = ","
 let g:autoformat_verbosemode=1
 let verbose=1
 " let g:formatterpath = ['/usr/local/bin/html-beautify']
+noremap <F3> :Autoformat<CR>
 
 " YouCompleteMe go to definition
 nnoremap <Leader>jd :YcmCompleter GoToDefinition<CR>
