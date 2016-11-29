@@ -13,18 +13,21 @@ Plugin 'VundleVim/Vundle.vim'
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
 
+" expanding abbreviations similar to emmet
+Plugin 'mattn/emmet-vim'
+
 " auto completion
 Plugin 'Valloric/YouCompleteMe'
-" plugin on GitHub repo
+" git gateway plugin on GitHub repo
 Plugin 'tpope/vim-fugitive'
 " vim autoformat from github
 Plugin 'Chiel92/vim-autoformat'
-" vCoolor
+" simple color selector of vCoolor
 Plugin 'KabbAmine/vCoolor.vim'
 " block comment
 Plugin 'scrooloose/nerdcommenter'
 " syntastic check
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
 " All of your Plugins must be added before the following line
 call vundle#end()   "required
 filetype plugin indent on
@@ -231,15 +234,37 @@ let python_highlight_all=1
 
 
 " scrooloose/syntastic settings
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
 
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+"let g:syntastic_always_populate_loc_list = 1
+"let g:syntastic_auto_loc_list = 1
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
 
 
 " YouCompleteMe config
 let g:ycm_python_binary_path = 'python3'
+
+
+" open all folds
+set foldlevel=99
+
+" move to previous window
+nmap <Leader>p :<c-w><c-p>
+
+" toggle nerdtree
+nmap <Leader>a :NERDTreeToggle<cr>
+
+" autoreflesh nerdtree
+"autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
+
+
+" reload all buffer
+nmap <leader>z :bufdo e<cr>
+
+
+
+
+
