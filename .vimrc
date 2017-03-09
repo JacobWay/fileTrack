@@ -29,12 +29,40 @@ Plugin 'scrooloose/nerdcommenter'
 " syntastic check
 " Plugin 'scrooloose/syntastic'
 " All of your Plugins must be added before the following line
+
+" fuzzy file, buffer, mru, tag, etc finder
+Plugin 'ctrlpvim/ctrlp.vim'
+
+" powerline vim
+Plugin 'vim-airline/vim-airline'
+
+" react, jsx
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+
+" es6 syntax
+Plugin 'othree/yajs.vim'
+Plugin 'maxmellon/vim-jsx-pretty'
+
+" vim syntastic
+Plugin 'vim-syntastic/syntastic'
+
+" eslint fix
+Plugin 'ruanyl/vim-fixmyjs'
+
+" vim jsbeautify
+Plugin 'maksimr/vim-jsbeautify'
+
+Plugin 'millermedeiros/vim-esformatter'
+
 call vundle#end()   "required
 filetype plugin indent on
 
 execute pathogen#infect()
 
 
+" General setting
+"
 " Filetype Syntax
 syntax on
 filetype plugin indent on
@@ -47,28 +75,24 @@ set expandtab
 set shiftwidth=4
 set softtabstop=4
 
-" Navigation
-set number
+" Mouse and appearance
 set mouse=a
 set mousehide
+set number
 set hlsearch
 
+"Window
 " Normal Mode Key Bindings
 nnoremap <C-k>  <C-w>k  " Move along windows faster
 nnoremap <C-j>  <C-w>j  " Move along windows faster
 nnoremap <C-h>  <C-w>h  " Move along windows faster
 nnoremap <C-l>  <C-w>l  " Move along windows faster
 
-nnoremap <C-tab>    :tabnext<CR>
-nnoremap <C-t>  :tabnew<CR>
-
 " Line movement
 " nnoremap j  gj  " Move along rows, not lines
 " nnoremap k  gk  " Move along rows, not lines
 " nnoremap 0  g0  " Move along rows, not lines
 " nnoremap $  g$  " Useful for long lines
-
-autocmd FileType html setlocal shiftwidth=2 softtabstop=2 expandtab
 
 syntax enable
 " set background=light
@@ -116,6 +140,7 @@ let g:thematic#defaults = {
 \ 'laststatus': 2,
 \ }
 
+" Plugins
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 
 " mapleader
@@ -124,7 +149,7 @@ let mapleader = ","
 " vim-autoformat folders containing formatters
 let g:autoformat_verbosemode=1
 let verbose=1
-" let g:formatterpath = ['/usr/local/bin/html-beautify']
+let g:formatterpath = [ '/usr/local/bin/js-beautify', '/usr/local/bin/html-beautify', '/usr/local/bin/css-beautify']
 noremap <F3> :Autoformat<CR>
 
 " YouCompleteMe go to definition
@@ -194,8 +219,11 @@ map <c-l> <c-w>l
 map <c-h> <c-w>h
 
 " easier moving between tabs
+nnoremap <C-tab>    :tabnext<CR>
+nnoremap <C-t>  :tabnew<CR>
 map <leader>n :tabprevious<CR>
 map <leader>m :tabnext<CR>
+
 
 " map sort function to a key
 vnoremap <Leader>s :sort<CR>
@@ -265,6 +293,76 @@ nmap <Leader>a :NERDTreeToggle<cr>
 nmap <leader>z :bufdo e<cr>
 
 
+""""""""""""""""""""""""""""""
+" => CTRL-P
+""""""""""""""""""""""""""""""
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_by_filename = 1
+let g:ctrlp_regexp = 1
+let g:ctrlp_match_window = 'bottom, order:ttb, min:1, max:10, results:10'
+let g:ctrlp_switch_buffer = 'Et'
+let g:ctrlp_reuse_window = 'netrw'
+let g:ctrlp_tabpage_position = 'ac'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+let g:crlp_working_path_mode = 'ra'
+
+let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
 
 
+" powerline vim setup
+let g:airline_powerline_fonts = 1
 
+" react jsx
+let g:jsx_ext_required = 0
+
+" set html file tab convert to spaces
+autocmd FileType html setlocal shiftwidth=4 softtabstop=4 expandtab
+
+" set js file tab convert to spaces
+autocmd FileType js setlocal shiftwidth=4 softtabstop=4 expandtab
+
+" change line
+map <leader>i <ESC>i<CR><ESC>
+
+
+""""""""""""""""""""""""""""""
+" Plugins setup
+""""""""""""""""""""""""""""""
+
+" vim-syntastic/syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_javascript_checkers = ['eslint']
+
+" eslint fixmyjs
+let g:fixmyjs_rc_filename = '.eslintrc.js'
+noremap <Leader>f :Fixmyjs<CR>
+
+" will run esformatter after pressing <leader> followed by the 'e' and 's' keys
+nnoremap <silent> <leader>es :Esformatter<CR>
+vnoremap <silent> <leader>es :EsformatterVisual<CR>
+
+"vim-jsx-pretty
+let g:vim_jsx_pretty_enable_jsx_highlight = 1
+let g:vim_jsx_pretty_colorful_config = 0
+
+
+"
+" General Rules
+"
+
+" Searching with smart case
+set ignorecase
+set smartcase

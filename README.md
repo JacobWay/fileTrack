@@ -1,1 +1,3 @@
-This is my Vim configure.
+.vimrc
+.gitignore
+.zshrc
