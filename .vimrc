@@ -55,6 +55,18 @@ Plugin 'maksimr/vim-jsbeautify'
 
 Plugin 'millermedeiros/vim-esformatter'
 
+" vim-vue syntax
+Plugin 'posva/vim-vue'
+
+" vim-misc
+Plugin 'xolox/vim-misc'
+
+" automated tag generation and syntax highlighting in vim
+Plugin 'xolox/vim-easytags'
+
+" an overview of the structure of source code
+Plugin 'vim-scripts/taglist.vim'
+
 call vundle#end()   "required
 filetype plugin indent on
 
@@ -305,14 +317,16 @@ let g:ctrlp_switch_buffer = 'Et'
 let g:ctrlp_reuse_window = 'netrw'
 let g:ctrlp_tabpage_position = 'ac'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'dir':  '\.(git|hg|svn)$',
   \ 'file': '\v\.(exe|so|dll)$',
   \ 'link': 'some_bad_symbolic_links',
   \ }
-let g:crlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = 'ra'
 
 let g:ctrlp_user_command = 'find %s -type f'        " MacOSX/Linux
+map ff :CtrlP<.><cr>
 
 
 " powerline vim setup
@@ -320,12 +334,6 @@ let g:airline_powerline_fonts = 1
 
 " react jsx
 let g:jsx_ext_required = 0
-
-" set html file tab convert to spaces
-autocmd FileType html setlocal shiftwidth=4 softtabstop=4 expandtab
-
-" set js file tab convert to spaces
-autocmd FileType js setlocal shiftwidth=4 softtabstop=4 expandtab
 
 " change line
 map <leader>i <ESC>i<CR><ESC>
@@ -366,3 +374,37 @@ let g:vim_jsx_pretty_colorful_config = 0
 " Searching with smart case
 set ignorecase
 set smartcase
+
+" jump from, eg, a <div> to its </div>
+runtime macros/matchit.vim
+
+
+" jsbeautify
+map <leader>b :call JsBeautify()<cr>
+" or
+autocmd FileType javascript noremap <buffer>  <leader>b :call JsBeautify()<cr>
+" for json
+autocmd FileType json noremap <buffer> <leader>b :call JsonBeautify()<cr>
+" for jsx
+autocmd FileType jsx noremap <buffer> <leader>b :call JsxBeautify()<cr>
+" for html
+autocmd FileType html noremap <buffer> <leader>b :call HtmlBeautify()<cr>
+" for css or scss
+autocmd FileType css noremap <buffer> <leader>b :call CSSBeautify()<cr>
+
+
+" vue file syntax highlight
+" au BufReadPost *.vue set syntax=html
+
+
+" set html file tab convert to spaces
+autocmd FileType html setlocal shiftwidth=4 softtabstop=4 expandtab
+
+" set js file tab convert to spaces
+autocmd FileType javascript setlocal shiftwidth=4 softtabstop=4 expandtab
+
+" posva/vim-vue syntax highlighting stops working randomly
+autocmd FileType vue syntax sync fromstart
+
+" vim-taglist set
+let Tlist_Ctags_Cmd = '/usr/local/bin/ctags'
